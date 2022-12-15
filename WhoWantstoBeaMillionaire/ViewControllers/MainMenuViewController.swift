@@ -58,6 +58,25 @@ class MainMenuViewController: UIViewController {
         present(newViewController, animated: true)
     }
     
+    private lazy var settingButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = #colorLiteral(red: 0.875690937, green: 0.3231568933, blue: 0.05884259194, alpha: 1)
+        button.layer.cornerRadius = 10
+        button.setTitle("Settings", for: .normal)
+        button.titleLabel?.font = UIFont(name: "System Bold", size: 30)
+        button.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        button.addTarget(self, action: #selector(settingButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    @objc private func settingButtonTapped() {
+        let newViewController = SettingsViewController()
+        newViewController.modalPresentationStyle = .fullScreen
+        present(newViewController, animated: true)
+    }
+    
+    
     // MARK: - viewDidLoad()
     
     override func viewDidLoad() {
@@ -74,6 +93,7 @@ class MainMenuViewController: UIViewController {
         view.addSubview(backImage)
         view.addSubview(newGameButton)
         view.addSubview(recordsButton)
+        view.addSubview(settingButton)
     }
 }
 
@@ -91,10 +111,14 @@ extension MainMenuViewController {
             newGameButton.topAnchor.constraint(equalTo: backImage.bottomAnchor, constant: 30),
             newGameButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             newGameButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
+            
             recordsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             recordsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
-            recordsButton.topAnchor.constraint(equalTo: newGameButton.bottomAnchor, constant: 20)
+            recordsButton.topAnchor.constraint(equalTo: newGameButton.bottomAnchor, constant: 20),
             
+            settingButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
+            settingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
+            settingButton.topAnchor.constraint(equalTo: recordsButton.bottomAnchor, constant: 20)
 
         ])
     }

@@ -91,7 +91,7 @@ extension RecordsViewController {
     }
 }
 
-// MARK: - setConstraints()
+// MARK: - DataSource()
 extension RecordsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

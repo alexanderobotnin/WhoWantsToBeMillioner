@@ -12,6 +12,8 @@ final class Game {
     
     var gameSession: GameSession?
     
+    var difficulty: Difficulty = .sequential
+    
     var questions: [Question] {
         didSet {
             questionsCaretaker.save(questions: self.questions)
@@ -43,5 +45,9 @@ final class Game {
     
     func addRecord(_ record: Record) {
         self.records.append(record)
+    }
+    
+    func addQuestions(_ questions: [Question]) {
+        self.questions += questions
     }
 }

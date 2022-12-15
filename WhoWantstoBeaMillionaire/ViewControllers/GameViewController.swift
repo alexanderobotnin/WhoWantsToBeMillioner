@@ -17,6 +17,15 @@ class GameViewController: UIViewController {
     weak var delegate: GameViewControllerDelegate?
     
     // MARK: - Create Object
+    
+    private var orderOfQuestionsStrategy: OrderOfQuestionsStrategy {
+        switch Game.shared.difficulty {
+        case .random:
+            return RandomOrderOfQuestionsStrategy()
+        case .sequential:
+            return SequentialOrderOfQuestionsStrategy()
+        }
+    }
 
     private let answersTableView: UITableView = {
         let tableView = UITableView()
@@ -37,7 +46,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setQuestion()
         setupViews()
         setConstraints()
         answersTableView.delegate = self
@@ -46,6 +55,10 @@ class GameViewController: UIViewController {
         
         
         
+    }
+    
+    func setQuestion() {
+        self.questions = self.orderOfQuestionsStrategy.getQuestions()
     }
     
     // MARK: - setupViews()
@@ -121,7 +134,7 @@ extension GameViewController: UITableViewDataSource {
     func createFooterLabel(_ section: Int) -> UILabel {
         let widthPadding: CGFloat = 15.0
         let label: UILabel = UILabel(frame: CGRect(x: widthPadding, y: 0, width: self.view.frame.width - widthPadding * 2, height: 30))
-        label.text = "Вопрос № \((Game.shared.gameSession?.countCorrectAnswers ?? 0) + 1) из \(Game.shared.questions.count)"
+        label.text = "Вопрос № \((Game.shared.gameSession?.countCorrectAnswers.value ?? 0) + 1) из \(Game.shared.questions.count)"
         label.numberOfLines = 1;
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
